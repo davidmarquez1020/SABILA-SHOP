@@ -1,0 +1,94 @@
+:root {
+  --ink: #2E2A1F;
+  --sand: #EDE6D6;
+  --sand-deep: #DCD1B4;
+  --moss: #4A5D3A;
+  --moss-deep: #34432A;
+  --sage: #C8D9B8;
+  --clay: #B5652F;
+  --clay-deep: #8F4C22;
+  --gold: #C9A227;
+  --card: #F7F3E8;
+  --font-display: "Fraunces", serif;
+  --font-body: "Work Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--sand);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  margin: 0;
+  color: var(--moss-deep);
+}
+
+p { margin: 0; }
+button { font-family: var(--font-body); cursor: pointer; }
+a { color: inherit; }
+
+.btn {
+  border: none;
+  border-radius: 3px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-clay { background: var(--clay); color: #FBF3E8; }
+.btn-clay:hover { background: var(--clay-deep); }
+.btn-outline { background: transparent; border: 1.5px solid var(--moss); color: var(--moss-deep); }
+.btn-outline:hover { background: var(--moss); color: #fff; }
+.btn-ghost { background: transparent; border: none; color: var(--moss-deep); text-decoration: underline; text-underline-offset: 3px; padding: 0.4rem 0; }
+
+input, textarea {
+  font-family: var(--font-body);
+  border: 1.5px solid var(--sand-deep);
+  background: #fff;
+  border-radius: 3px;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  width: 100%;
+}
+input:focus, textarea:focus { outline: none; border-color: var(--moss); }
+
+.tag-card {
+  background: var(--card);
+  border: 1px solid var(--sand-deep);
+  border-radius: 2px;
+  padding: 1.4rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.tag-card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--moss);
+  background: var(--sand);
+}
+
+.nav-link { font-size: 0.92rem; letter-spacing: 0.02em; padding: 0.4rem 0; border-bottom: 2px solid transparent; background: none; border-width: 0 0 2px 0; text-align: left; }
+.nav-link.active { border-bottom-color: var(--clay); }
+
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; }
+  .hamburger { display: inline-flex !important; }
+}
