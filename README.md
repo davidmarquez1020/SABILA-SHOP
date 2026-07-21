@@ -42,7 +42,8 @@ netlify dev                  # runs Vite + the functions together on http://loca
 ### 2. Supabase
 
 1. Create a free project at supabase.com.
-2. SQL Editor -> paste the contents of `schema.sql` -> run it.
+2. SQL Editor -> paste the contents of `schema.sql` -> run it. Then do the same with
+   `products_schema.sql` (creates and seeds the product catalog).
 3. Project Settings -> API -> copy the Project URL into `SUPABASE_URL` and the **service_role**
    key (not the anon key — this needs to bypass RLS) into `SUPABASE_SERVICE_ROLE_KEY`.
 
@@ -60,8 +61,8 @@ netlify dev                  # runs Vite + the functions together on http://loca
 
 ## What's still a placeholder
 
-- **Products** live in `shared/products.json`, not a database. Fine at 8 items; move to a Supabase
-  table (and add an admin page) once you're editing the catalog often.
+- **Products** live in a Supabase `products` table now (see `products_schema.sql`), but there's
+  no admin page yet — editing the catalog means using the Supabase Table Editor directly.
 - **Order confirmation emails** aren't sent — Stripe Checkout can send its own receipt automatically
   (turn it on in Stripe Dashboard -> Settings -> Emails), or you can add a call to something like
   Resend inside the webhook function.

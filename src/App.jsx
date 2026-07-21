@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { PRODUCTS } from "./data/products.js";
+import { useEffect, useMemo, useState } from "react";
+import { getProducts } from "./lib/api.js";
 import { Header } from "./components/Header.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
@@ -21,6 +21,17 @@ export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState({});
   const [category, setCategory] = useState("All");
+  const [products, setProducts] = useState([]);
+  const [productsLoaded, setProductsLoaded] = useState(false);
+
+  useEffect(() => {
+    getProducts()
+      .then(setProducts)
+      .catch(() => setProducts([]))
+      .finally(() => setProductsLoaded(true));
+  }, []);
+
+  const categories = useMemo(() => ["All", ...new Set(products.map((p) => p.category))], [products]);
 
   const goTo = (p) => {
     setPage(p);
@@ -40,28 +51,38 @@ export default function App() {
   const cartItems = useMemo(
     () =>
       Object.entries(cart)
-        .map(([id, qty]) => ({ ...PRODUCTS.find((p) => p.id === id), qty }))
+        .map(([id, qty]) => ({ ...products.find((p) => p.id === id), qty }))
         .filter((i) => i.id),
-    [cart]
+    [cart, products]
   );
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
   const cartTotal = cartItems.reduce((s, i) => s + i.qty * i.price, 0);
   const shipping = cartTotal > 0 && cartTotal < 40 ? 5 : 0;
   const orderTotal = cartTotal + shipping;
 
-  const filteredProducts = category === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === category);
+  const filteredProducts = category === "All" ? products : products.filter((p) => p.category === category);
 
   const handleDrawerCheckout = async () => {
     setCartOpen(false);
     goTo("checkout");
   };
 
+  if (!productsLoaded) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#5A5546" }}>
+        Loading…
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight: "100%" }}>
       <Header page={page} goTo={goTo} cartCount={cartCount} onCart={() => setCartOpen(true)} />
 
-      {page === "home" && <Home goTo={goTo} addToCart={addToCart} />}
-      {page === "shop" && <Shop category={category} setCategory={setCategory} products={filteredProducts} addToCart={addToCart} />}
+      {page === "home" && <Home goTo={goTo} addToCart={addToCart} products={products} />}
+      {page === "shop" && (
+        <Shop category={category} setCategory={setCategory} products={filteredProducts} categories={categories} addToCart={addToCart} />
+      )}
       {page === "about" && <About />}
       {page === "contact" && <Contact />}
       {page === "checkout" && (

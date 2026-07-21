@@ -1,3 +1,9 @@
+export async function getProducts() {
+  const res = await fetch("/.netlify/functions/get-products");
+  if (!res.ok) throw new Error("Could not load products.");
+  return res.json();
+}
+
 export async function createCheckoutSession({ items, customer }) {
   const res = await fetch("/.netlify/functions/create-checkout-session", {
     method: "POST",

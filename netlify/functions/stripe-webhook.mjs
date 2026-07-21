@@ -46,5 +46,3 @@ export default async (req) => {
 
   return new Response(JSON.stringify({ received: true }), { status: 200 });
 };
-
-export const config = { path: "/.netlify/functions/stripe-webhook" };

@@ -1,12 +1,8 @@
 import Stripe from "stripe";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const products = JSON.parse(readFileSync(path.join(__dirname, "../../shared/products.json"), "utf-8"));
+import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 const SITE_URL = process.env.SITE_URL || "http://localhost:8888";
 
 export default async (req) => {
@@ -25,6 +21,12 @@ export default async (req) => {
     }
 
     // Look up every price server-side. Never trust a price sent from the browser.
+    const { data: products, error: productsError } = await supabase
+      .from("products")
+      .select("id, name, price")
+      .in("id", items.map(({ id }) => id));
+    if (productsError) throw new Error("Could not look up products.");
+
     const line_items = items.map(({ id, qty }) => {
       const product = products.find((p) => p.id === id);
       if (!product) throw new Error(`Unknown product: ${id}`);

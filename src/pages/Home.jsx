@@ -1,9 +1,8 @@
-import { PRODUCTS } from "../data/products.js";
 import { ProductCard } from "../components/ProductCard.jsx";
 import { LeafDivider } from "../components/LeafMark.jsx";
 
-export function Home({ goTo, addToCart }) {
-  const featured = PRODUCTS.slice(0, 3);
+export function Home({ goTo, addToCart, products }) {
+  const featured = products.slice(0, 3);
   return (
     <main>
       <section style={{ maxWidth: 1120, margin: "0 auto", padding: "3.5rem 1.5rem 2rem", display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "2.5rem", alignItems: "center" }}>
@@ -22,11 +21,13 @@ export function Home({ goTo, addToCart }) {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <svg width="280" height="340" viewBox="0 0 280 340" fill="none">
-            <path d="M140 20 C60 60 30 160 40 300 C42 320 60 330 90 330 C190 330 250 260 260 140 C266 70 220 30 140 20 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="3" />
-            <path d="M140 20 C110 100 100 220 108 320" stroke="var(--moss)" strokeWidth="2" strokeDasharray="2 8" strokeLinecap="round" />
-            <path d="M85 90 C110 140 112 220 96 300" stroke="var(--moss-deep)" strokeWidth="1.2" opacity="0.5" />
-            <path d="M200 70 C180 140 170 220 150 310" stroke="var(--moss-deep)" strokeWidth="1.2" opacity="0.5" />
-            <ellipse cx="140" cy="175" rx="46" ry="120" fill="#EAF0DE" opacity="0.65" />
+            <path d="M140 322 C110 300 96 220 106 120 C112 78 124 52 140 40 C156 52 168 78 174 120 C184 220 170 300 140 322 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="2.5" opacity="0.85" transform="translate(140,322) rotate(-45) scale(1,0.62) translate(-140,-322)" />
+            <path d="M140 322 C110 300 96 220 106 120 C112 78 124 52 140 40 C156 52 168 78 174 120 C184 220 170 300 140 322 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="2.5" opacity="0.85" transform="translate(140,322) rotate(45) scale(1,0.62) translate(-140,-322)" />
+            <path d="M140 322 C110 300 96 220 106 120 C112 78 124 52 140 40 C156 52 168 78 174 120 C184 220 170 300 140 322 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="2.5" opacity="0.92" transform="translate(140,322) rotate(-22) scale(1,0.85) translate(-140,-322)" />
+            <path d="M140 322 C110 300 96 220 106 120 C112 78 124 52 140 40 C156 52 168 78 174 120 C184 220 170 300 140 322 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="2.5" opacity="0.92" transform="translate(140,322) rotate(22) scale(1,0.85) translate(-140,-322)" />
+            <path d="M140 322 C110 300 96 220 106 120 C112 78 124 52 140 40 C156 52 168 78 174 120 C184 220 170 300 140 322 Z" fill="var(--sage)" stroke="var(--moss)" strokeWidth="3" />
+            <ellipse cx="140" cy="185" rx="30" ry="110" fill="#EAF0DE" opacity="0.55" />
+            <path d="M140 318 C132 260 130 160 140 60" stroke="var(--moss)" strokeWidth="2" strokeDasharray="2 8" strokeLinecap="round" />
           </svg>
         </div>
       </section>

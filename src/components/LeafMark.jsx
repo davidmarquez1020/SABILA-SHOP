@@ -1,10 +1,11 @@
 export function LeafMark({ size = 28, stroke = "var(--moss)" }) {
+  const blade = "M32 60 C20 55 17 34 25 16 C28 10 36 10 39 16 C47 34 44 55 32 60 Z";
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <path d="M32 6 C14 14 8 32 8 48 C8 54 12 58 18 58 C34 58 52 50 56 30 C58 20 52 10 32 6 Z" fill="var(--sage)" stroke={stroke} strokeWidth="2.5" />
-      <path d="M32 6 C24 20 22 38 24 56" stroke={stroke} strokeWidth="1.5" strokeDasharray="1 5" strokeLinecap="round" />
-      <path d="M20 22 C26 30 26 42 22 52" stroke={stroke} strokeWidth="1" opacity="0.5" strokeLinecap="round" />
-      <path d="M44 18 C40 30 38 42 34 54" stroke={stroke} strokeWidth="1" opacity="0.5" strokeLinecap="round" />
+      <path d={blade} fill="var(--sage)" stroke={stroke} strokeWidth="2.5" transform="rotate(-30 32 60)" />
+      <path d={blade} fill="var(--sage)" stroke={stroke} strokeWidth="2.5" transform="rotate(30 32 60)" />
+      <path d={blade} fill="var(--sage)" stroke={stroke} strokeWidth="2.5" />
+      <path d="M32 58 C30 46 30 28 32 14" stroke={stroke} strokeWidth="1.2" strokeDasharray="1 5" strokeLinecap="round" opacity="0.6" />
     </svg>
   );
 }
