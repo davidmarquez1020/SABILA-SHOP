@@ -26,7 +26,13 @@ export function CartDrawer({ cartItems, cartTotal, setQty, onClose, onCheckout, 
                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
                       <button onClick={() => setQty(item.id, item.qty - 1)} style={{ width: 24, height: 24, border: "1px solid var(--sand-deep)", background: "#fff", borderRadius: 3 }}>−</button>
                       <span style={{ fontSize: "0.9rem" }}>{item.qty}</span>
-                      <button onClick={() => setQty(item.id, item.qty + 1)} style={{ width: 24, height: 24, border: "1px solid var(--sand-deep)", background: "#fff", borderRadius: 3 }}>+</button>
+                      <button
+                        onClick={() => setQty(item.id, item.qty + 1)}
+                        disabled={item.qty >= item.stock}
+                        style={{ width: 24, height: 24, border: "1px solid var(--sand-deep)", background: "#fff", borderRadius: 3 }}
+                      >
+                        +
+                      </button>
                       <button onClick={() => setQty(item.id, 0)} className="btn-ghost" style={{ marginLeft: "auto", fontSize: "0.78rem" }}>Remove</button>
                     </div>
                   </div>

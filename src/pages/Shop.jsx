@@ -1,6 +1,6 @@
 import { ProductCard } from "../components/ProductCard.jsx";
 
-export function Shop({ category, setCategory, products, categories, addToCart }) {
+export function Shop({ category, setCategory, products, categories, addToCart, onView }) {
   return (
     <main style={{ maxWidth: 1120, margin: "0 auto", padding: "3rem 1.5rem 4rem" }}>
       <h1 style={{ fontSize: "2.2rem", marginBottom: 6 }}>The full range</h1>
@@ -25,7 +25,7 @@ export function Shop({ category, setCategory, products, categories, addToCart })
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 20 }}>
         {products.map((p) => (
-          <ProductCard key={p.id} product={p} onAdd={() => addToCart(p.id)} />
+          <ProductCard key={p.id} product={p} onAdd={() => addToCart(p.id)} onView={onView} />
         ))}
       </div>
     </main>

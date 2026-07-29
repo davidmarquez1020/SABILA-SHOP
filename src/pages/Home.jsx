@@ -1,7 +1,7 @@
 import { ProductCard } from "../components/ProductCard.jsx";
 import { LeafDivider } from "../components/LeafMark.jsx";
 
-export function Home({ goTo, addToCart, products }) {
+export function Home({ goTo, addToCart, products, onView }) {
   const featured = products.slice(0, 3);
   return (
     <main>
@@ -54,7 +54,7 @@ export function Home({ goTo, addToCart, products }) {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
           {featured.map((p) => (
-            <ProductCard key={p.id} product={p} onAdd={() => addToCart(p.id)} />
+            <ProductCard key={p.id} product={p} onAdd={() => addToCart(p.id)} onView={onView} />
           ))}
         </div>
       </section>

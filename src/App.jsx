@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer.jsx";
 import { CartDrawer } from "./components/CartDrawer.jsx";
 import { Home } from "./pages/Home.jsx";
 import { Shop } from "./pages/Shop.jsx";
+import { Product } from "./pages/Product.jsx";
 import { About } from "./pages/About.jsx";
 import { Contact } from "./pages/Contact.jsx";
 import { Checkout } from "./pages/Checkout.jsx";
@@ -23,6 +24,7 @@ export default function App() {
   const [category, setCategory] = useState("All");
   const [products, setProducts] = useState([]);
   const [productsLoaded, setProductsLoaded] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   useEffect(() => {
     getProducts()
@@ -38,7 +40,20 @@ export default function App() {
     window.scrollTo?.({ top: 0, behavior: "instant" });
   };
 
-  const addToCart = (id) => setCart((c) => ({ ...c, [id]: (c[id] || 0) + 1 }));
+  const goToProduct = (id) => {
+    setSelectedProductId(id);
+    goTo("product");
+  };
+
+  const addToCart = (id) => {
+    const product = products.find((p) => p.id === id);
+    if (!product) return;
+    setCart((c) => {
+      const current = c[id] || 0;
+      if (current >= product.stock) return c;
+      return { ...c, [id]: current + 1 };
+    });
+  };
   const setQty = (id, qty) => {
     setCart((c) => {
       const next = { ...c };
@@ -79,9 +94,12 @@ export default function App() {
     <div style={{ minHeight: "100%" }}>
       <Header page={page} goTo={goTo} cartCount={cartCount} onCart={() => setCartOpen(true)} />
 
-      {page === "home" && <Home goTo={goTo} addToCart={addToCart} products={products} />}
+      {page === "home" && <Home goTo={goTo} addToCart={addToCart} products={products} onView={goToProduct} />}
       {page === "shop" && (
-        <Shop category={category} setCategory={setCategory} products={filteredProducts} categories={categories} addToCart={addToCart} />
+        <Shop category={category} setCategory={setCategory} products={filteredProducts} categories={categories} addToCart={addToCart} onView={goToProduct} />
+      )}
+      {page === "product" && (
+        <Product product={products.find((p) => p.id === selectedProductId)} addToCart={addToCart} goTo={goTo} />
       )}
       {page === "about" && <About />}
       {page === "contact" && <Contact />}

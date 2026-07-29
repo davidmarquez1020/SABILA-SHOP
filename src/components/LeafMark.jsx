@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export function LeafMark({ size = 28, stroke = "var(--moss)" }) {
   const blade = "M32 60 C20 55 17 34 25 16 C28 10 36 10 39 16 C47 34 44 55 32 60 Z";
   return (
@@ -22,4 +24,55 @@ export function LeafDivider() {
 
 export function Price({ value }) {
   return <span style={{ fontFamily: "var(--font-mono)" }}>${value.toFixed(2)}</span>;
+}
+
+export function ProductImage({ url, alt, height = 160 }) {
+  if (url) {
+    return (
+      <img
+        src={url}
+        alt={alt}
+        style={{ width: "100%", height, objectFit: "cover", borderRadius: 3, background: "var(--sand-deep)" }}
+      />
+    );
+  }
+  return (
+    <div style={{ width: "100%", height, background: "var(--sage)", borderRadius: 3, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <LeafMark size={Math.round(height * 0.3)} />
+    </div>
+  );
+}
+
+export function ProductGallery({ images, alt, height = 420 }) {
+  const [selected, setSelected] = useState(0);
+  const list = images?.length ? images : [];
+
+  return (
+    <div>
+      <ProductImage url={list[selected]} alt={alt} height={height} />
+      {list.length > 1 && (
+        <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+          {list.map((url, i) => (
+            <button
+              key={url + i}
+              onClick={() => setSelected(i)}
+              style={{
+                padding: 0,
+                width: 56,
+                height: 56,
+                border: i === selected ? "2px solid var(--moss)" : "1px solid var(--sand-deep)",
+                borderRadius: 3,
+                background: "none",
+                cursor: "pointer",
+                overflow: "hidden",
+              }}
+              aria-label={`Show photo ${i + 1}`}
+            >
+              <img src={url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }

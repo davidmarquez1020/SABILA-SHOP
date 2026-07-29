@@ -23,7 +23,7 @@ export default async (req) => {
     // Look up every price server-side. Never trust a price sent from the browser.
     const { data: products, error: productsError } = await supabase
       .from("products")
-      .select("id, name, price")
+      .select("id, name, price, stock")
       .in("id", items.map(({ id }) => id));
     if (productsError) throw new Error("Could not look up products.");
 
@@ -31,12 +31,15 @@ export default async (req) => {
       const product = products.find((p) => p.id === id);
       if (!product) throw new Error(`Unknown product: ${id}`);
       const quantity = Math.max(1, Math.min(20, Number(qty) || 1));
+      if (quantity > product.stock) {
+        throw new Error(`Not enough stock for "${product.name}". Only ${product.stock} left.`);
+      }
       return {
         quantity,
         price_data: {
           currency: "usd",
           unit_amount: Math.round(product.price * 100),
-          product_data: { name: product.name },
+          product_data: { name: product.name, metadata: { product_id: id } },
         },
       };
     });
