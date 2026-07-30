@@ -1,4 +1,7 @@
-import { LeafDivider } from "../components/LeafMark.jsx";
+import { LeafDivider, ProductImage } from "../components/LeafMark.jsx";
+
+// Paste a Supabase Storage (or any) public image URL here once you've uploaded a photo.
+const PROCESS_IMAGE_URL = "https://himhrwyzehvpznpydgpl.supabase.co/storage/v1/object/public/product-images/AloeVeraPlant.jpg";
 
 export function About() {
   const steps = [
@@ -28,6 +31,9 @@ export function About() {
       <p style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", color: "var(--moss-deep)", lineHeight: 1.6, fontStyle: "italic" }}>
         We're a small workroom, not a factory line — some weeks we sell out because the leaves simply weren't ready yet, and that's fine by us.
       </p>
+      <div style={{ marginTop: 40 }}>
+        <ProductImage url={PROCESS_IMAGE_URL} alt="Aloe vera plant" height={320} />
+      </div>
     </main>
   );
 }
