@@ -22,3 +22,16 @@ export async function getCheckoutSession(sessionId) {
   if (!res.ok) throw new Error("Could not load order.");
   return res.json();
 }
+
+export async function sendContactMessage({ name, email, message }) {
+  const res = await fetch("/.netlify/functions/send-contact-message", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, message }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || "Could not send message.");
+  }
+  return res.json();
+}

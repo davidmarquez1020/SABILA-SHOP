@@ -47,6 +47,14 @@ netlify dev                  # runs Vite + the functions together on http://loca
 3. Project Settings -> API -> copy the Project URL into `SUPABASE_URL` and the **service_role**
    key (not the anon key — this needs to bypass RLS) into `SUPABASE_SERVICE_ROLE_KEY`.
 
+### 3. Resend (contact form email)
+
+1. Create a free account at resend.com and copy an API key into `RESEND_API_KEY`.
+2. Set `CONTACT_EMAIL` to whatever address should receive contact form submissions.
+3. No domain verification needed for this — messages send from Resend's shared
+   `onboarding@resend.dev` address, which works as long as `CONTACT_EMAIL` is the address you
+   signed up to Resend with.
+
 ## Deploying to Netlify
 
 1. Push this repo to GitHub.
@@ -61,12 +69,10 @@ netlify dev                  # runs Vite + the functions together on http://loca
 
 ## What's still a placeholder
 
-- **Products** live in a Supabase `products` table now (see `products_schema.sql`), but there's
-  no admin page yet — editing the catalog means using the Supabase Table Editor directly.
-- **Order confirmation emails** aren't sent — Stripe Checkout can send its own receipt automatically
-  (turn it on in Stripe Dashboard -> Settings -> Emails), or you can add a call to something like
-  Resend inside the webhook function.
-- **The contact form** is UI-only right now; wire it to a function + an email service the same way
-  as the webhook if you want it to actually deliver messages.
-- **Inventory/stock levels** aren't tracked anywhere — there's nothing stopping overselling a limited
-  batch. Worth adding once real stock exists.
+- **Products** live in a Supabase `products` table now (see `products_schema.sql`,
+  `inventory_schema.sql`, `product_gallery_schema.sql`), but there's no admin page yet — editing
+  the catalog, stock, or photos means using the Supabase Table Editor / Storage directly.
+- **Order confirmation emails** aren't sent to customers — Stripe Checkout can send its own
+  receipt automatically (turn it on in Stripe Dashboard -> Settings -> Emails). The contact form
+  (see below) does send owner-facing emails via Resend, but nothing emails the customer back
+  when an order comes in yet.
