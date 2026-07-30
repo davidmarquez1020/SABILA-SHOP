@@ -44,6 +44,15 @@ export function Product({ product, addToCart, goTo }) {
           <button className="btn-ghost" onClick={() => goTo("shop")}>← Back to shop</button>
         </div>
       </div>
+
+      {product.description && (
+        <div style={{ gridColumn: "1 / -1", borderTop: "1px solid var(--sand-deep)", paddingTop: 24, marginTop: 8 }}>
+          <h2 style={{ fontSize: "1.1rem", marginBottom: 10 }}>Description</h2>
+          <p style={{ fontSize: "0.95rem", color: "#4B4636", lineHeight: 1.7, maxWidth: 700, whiteSpace: "pre-line" }}>
+            {product.description}
+          </p>
+        </div>
+      )}
     </main>
   );
 }

@@ -5,7 +5,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 export default async () => {
   const { data, error } = await supabase
     .from("products")
-    .select("id, name, category, price, tag, blurb, note, stock, image_urls")
+    .select("id, name, category, price, tag, blurb, note, stock, image_urls, description")
     .eq("active", true)
     .order("created_at", { ascending: true });
 
